@@ -18,10 +18,11 @@
             Descarga QR
             <v-icon icon="mdi mdi-arrow-collapse-down" @click="descargaQr(qr.imagenQr)"></v-icon>
           </div>
+          
             <!-- bnt temporal-->
-            <v-btn  class="ml-5" height="35" min-width="164" variant="tonal" color="naranja"
+            <v-btn  class="ml-8 mt-5" height="35" min-width="164" variant="tonal" color="naranja"
                 @click="descargarFactura()">
-                YA REALICE EL PAGO
+                YA REALICÉ EL PAGO
               </v-btn>
         </div>
 
@@ -53,10 +54,10 @@ import { ref, computed, onMounted, inject } from "vue";
 import { useQrStore } from "../../store/QrStore";
 import { formatearMoneda } from "../../composable/utilsComposable";
 const qrStore = useQrStore();
-const qr = ref({});
+const qr:any = ref({});
 import { useUtilStore } from "@/store/UtilStore";
 const utilStore = useUtilStore();
-const swal = inject('$swal')
+const swal:any = inject('$swal')
 import { useDeudaClienteStore } from "@/store/DeudaClienteStore";
 const deudaClienteStore = useDeudaClienteStore();
 const qr_proceso = ref(false);
@@ -71,6 +72,7 @@ onMounted(() => {
   qr.value = {};
   pago_exito.value = false;
   alias_exito.value = null;
+  console.log("sokete por conectar")
   socket.on('connect', () => {
     console.log("sokete conectado")
   });
@@ -99,14 +101,14 @@ onMounted(() => {
 
 const total = computed(() => {
   let sum = 0;
-  deudaClienteStore.lstDetallePagos.forEach((obj) => {
+  deudaClienteStore.lstDetallePagos?.forEach((obj) => {
     sum += obj.subTotal;
   });
   //return sum;
-  return formatearMoneda(sum);
+  return formatearMoneda(sum.toString());
 });
 const props = defineProps(["entidadId"]);
-const descargaQr = (linkSource) => {
+const descargaQr = (linkSource:string) => {
   const downloadLink = document.createElement("a");
   downloadLink.href = linkSource;
   downloadLink.download = "qr.jpg";
@@ -116,8 +118,8 @@ const generarQR = async () => {
   pago_exito.value = false;
   alias_exito.value = null;
   let sum = 0;
-  let deudasCliente = [];
-  deudaClienteStore.lstDetallePagos.forEach(async (item) => {
+  let deudasCliente:any = [];
+  deudaClienteStore.lstDetallePagos?.forEach(async (item) => {
     sum += item.subTotal;
     deudasCliente.push(item.deudaClienteId);
   });
@@ -132,7 +134,7 @@ const generarQR = async () => {
   };
   qr_proceso.value = true;
   qr.value = {};
-  let r = await qrStore.generarQr(obj);
+  let r:any = await qrStore.generarQr(obj);
 
   if (r.data.status) {
     qr.value = r.data.result;

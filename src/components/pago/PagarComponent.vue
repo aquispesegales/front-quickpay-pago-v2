@@ -1,6 +1,6 @@
 <template>
     <div class="payment-details"
-        v-if="deudaClienteStore.objDatosCliente?.codigoCliente && deudaClienteStore.lstDetallePagos.length > 0">
+        v-if="deudaClienteStore.objDatosCliente?.codigoCliente && deudaClienteStore?.lstDetallePagos ">
         <div class="detail-section">
             <div class="titulo-pago">Detalle de pago</div>
             <div v-for="deuda in deudaClienteStore.lstDetallePagos" :key="deuda.deudaClienteId">

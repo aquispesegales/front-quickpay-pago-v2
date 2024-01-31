@@ -33,7 +33,7 @@ import { useDeudaClienteStore } from "@/store/DeudaClienteStore";
 const deudaClienteStore = useDeudaClienteStore();
 import { useEntidadStore } from '../../store/EntidadStore';
 
-const swal = inject('$swal')
+const swal:any = inject('$swal')
 
 const entidadStore = useEntidadStore();
 

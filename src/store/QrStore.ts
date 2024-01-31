@@ -6,7 +6,7 @@ const api = import.meta.env.VITE_API_QUICKPAY;
 export const useQrStore = defineStore("QrStore", () => {
 
 
-  const generarQr = async (obj) => {
+  const generarQr = async (obj:any) => {
     try {
         //http://localhost:9080/api/sitio/qr/genera-qr
       const res = await axios.post(`${api}/sitio/qr/genera-qr`,obj);

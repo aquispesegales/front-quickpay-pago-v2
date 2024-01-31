@@ -29,7 +29,7 @@
             </thead>
             <tbody>
              
-                <tr v-for="deuda in lstDeudasCliente" :key="deuda">
+                <tr v-for="deuda in lstDeudasCliente" :key="deuda.deudaClienteId">
 
                     <td>
                         <v-checkbox v-model="deudaClienteStore.lstDetallePagos" :value="deuda" hide-details></v-checkbox>
@@ -51,7 +51,7 @@
                     </td>
 
                     <td class="font-weight-thin  text-subtitle-1 text-negro text-right">
-                        {{ formatearMoneda(deuda.subTotal) }}
+                        {{ formatearMoneda(deuda.subTotal.toString()) }}
                     </td>
                 </tr>
             </tbody>
@@ -82,14 +82,25 @@ import { useDeudaClienteStore } from "@/store/DeudaClienteStore";
 const deudaClienteStore = useDeudaClienteStore();
 const props = defineProps(["entidadId"]);
 
-const lstDeudasCliente = ref([]);
+interface DeudaCliente {
+    deudaClienteId:number,
+    tipoServicio:string,
+    servicio:string,
+    periodo:string,
+    cantidad:number,
+    concepto:string,
+    montoUnitario:number,
+    subTotal:number
+  }
+
+const lstDeudasCliente = ref<DeudaCliente[]>();
 
 const total = computed(() => {
-    let sum = 0;
+    let sum:number = 0;
     deudaClienteStore.lstDetallePagos?.forEach((obj) => {
         sum += obj.subTotal;
     });
-    return formatearMoneda(sum);
+    return formatearMoneda(sum.toString());
 });
 
 
